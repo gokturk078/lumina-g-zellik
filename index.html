@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Lumina Estetik | Nişantaşı - Profesyonel Güzellik ve Bakım</title>
+    <meta name="description"
+        content="Lumina Estetik Nişantaşı. FDA onaylı lazer epilasyon, medikal cilt bakımı ve bölgesel incelme. Ücretsiz deneme seansı için formu doldurun.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Inter"', 'sans-serif'] },
+                    colors: {
+                        brand: { black: '#111111', lime: '#D9FD77', limeHover: '#C2E855', gray: '#F5F5F7' }
+                    },
+                    boxShadow: { 'soft': '0 4px 20px rgba(0, 0, 0, 0.05)', 'glow': '0 0 15px rgba(217, 253, 119, 0.5)', 'card': '0 10px 40px rgba(0, 0, 0, 0.08)' },
+                    animation: { 'float': 'float 3s ease-in-out infinite', 'pulse-slow': 'pulse 3s ease-in-out infinite' },
+                    keyframes: { float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .check-icon {
+            display: none;
+        }
+
+        input:checked+label .check-icon {
+            display: block;
+        }
+
+        input:checked+label {
+            background-color: #F5F5F7;
+            border-color: #111;
+        }
+
+        .safe-pb {
+            padding-bottom: calc(80px + env(safe-area-inset-bottom));
+        }
+
+        /* Before/After Slider */
+        .ba-slider {
+            position: relative;
+            overflow: hidden;
+            cursor: ew-resize;
+        }
+
+        .ba-slider .ba-after {
+            position: absolute;
+            inset: 0;
+        }
+
+        .ba-slider .ba-before {
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+
+        .ba-slider .ba-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: white;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .ba-slider .ba-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .ba-slider .ba-handle::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            color: #111;
+        }
+
+        /* FAQ Accordion */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* Shimmer Text */
+        .shimmer-text {
+            background: linear-gradient(90deg, #111 0%, #111 40%, #D9FD77 50%, #111 60%, #111 100%);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% center;
+            }
+
+            100% {
+                background-position: -200% center;
+            }
+        }
+
+        /* Page Loader */
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .page-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Floating WhatsApp */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 40;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @media (max-width: 768px) {
+            .floating-whatsapp {
+                display: none;
+            }
+        }
+
+        /* Exit Popup */
+        .exit-popup {
+            display: none;
+        }
+
+        .exit-popup.active {
+            display: flex;
+        }
+
+        /* Instagram Hover */
+        .insta-post:hover .insta-overlay {
+            opacity: 1;
+        }
+
+        .insta-overlay {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Story Carousel */
+        .story-dot.active {
+            background-color: #D9FD77;
+        }
+
+        /* Chat Widget Bounce */
+        .chat-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-brand-black font-sans safe-pb">
+
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="text-4xl font-black tracking-tighter animate-pulse">Lumina<span class="text-brand-lime">.</span>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp (Desktop) -->
+    <a href="https://wa.me/905555555555" target="_blank" class="floating-whatsapp group">
+        <div class="relative">
+            <div
+                class="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+            </div>
+            <span
+                class="absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-[10px] text-white font-bold animate-pulse">1</span>
+            <div
+                class="absolute right-full mr-3 top-1/2 -translate-y-1/2 bg-black text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                Hemen Yazın! 💬</div>
+        </div>
+    </a>
+
+    <!-- Promo Bar with Countdown -->
+    <div
+        class="bg-brand-black text-white text-[11px] md:text-xs font-bold tracking-widest text-center py-2.5 uppercase flex items-center justify-center gap-3 flex-wrap">
+        <span>🔥 Yaza Hazırlık Kampanyası: %40 İndirim</span>
+        <span class="bg-brand-lime text-black px-2 py-0.5 rounded text-[10px] font-black" id="countdown">⏰ 2g
+            14:32:05</span>
+    </div>
+
+    <!-- Minimal Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+        <div class="container mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-tighter uppercase">
+                Lumina<span
+                    class="text-xs font-medium tracking-normal ml-1 bg-brand-black text-white px-2 py-0.5 rounded-full">Estetik</span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#hero" class="hover:text-black transition-colors">Ana Sayfa</a>
+                <a href="#services" class="hover:text-black transition-colors">İşlemler</a>
+                <a href="#results" class="hover:text-black transition-colors">Sonuçlar</a>
+                <a href="#reviews" class="hover:text-black transition-colors">Yorumlar</a>
+                <a href="#faq" class="hover:text-black transition-colors">SSS</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="tel:+902125550000" class="hidden md:flex flex-col items-end text-right">
+                    <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Bize Ulaşın</span>
+                    <span class="font-bold text-sm">+90 212 555 0000</span>
+                </a>
+                <a href="#contact"
+                    class="bg-brand-black text-white px-5 py-2.5 rounded-lg text-sm font-bold hover:bg-gray-800 transition-colors">Randevu
+                    Al</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Split Hero Section -->
+    <section id="hero" class="relative pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Left: Content & Form -->
+                <div class="lg:w-1/2 relative z-10" data-aos="fade-right">
+                    <div
+                        class="inline-flex items-center gap-2 bg-brand-lime/30 px-3 py-1 rounded-full text-xs font-bold mb-6">
+                        <span class="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
+                        Bugün 12 kişi randevu aldı
+                    </div>
+
+                    <h1 class="text-4xl md:text-6xl font-black leading-[1.1] mb-6 tracking-tight">
+                        Kendini En İyi <br>
+                        <span class="shimmer-text">Halinle Tanıştır.</span>
+                    </h1>
+
+                    <p class="text-gray-500 text-lg md:text-xl mb-10 max-w-md leading-relaxed">
+                        Lumina ile bilimsel cilt bakımı ve FDA onaylı lazer teknolojileri. Abartıdan uzak, doğal ve
+                        sağlıklı güzellik.
+                    </p>
+
+                    <!-- Embedded Lead Form -->
+                    <div class="bg-brand-gray p-6 md:p-8 rounded-2xl border border-gray-200 shadow-soft" id="contact">
+                        <div class="flex items-center gap-2 mb-6">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-black"></i>
+                            <h3 class="font-bold text-lg">Ücretsiz Analiz & İndirim Fırsatı</h3>
+                        </div>
+                        <form class="space-y-4"
+                            onsubmit="event.preventDefault(); alert('Talebiniz alınmıştır! Uzmanlarımız sizi arayacaktır.');">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <input type="text" placeholder="Adınız Soyadınız"
+                                    class="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all">
+                                <input type="tel" placeholder="Telefon (5XX...)"
+                                    class="w-full bg-white border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all">
+                            </div>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm font-medium">
+                                <div>
+                                    <input type="radio" name="service" id="s_lazer" class="hidden" checked>
+                                    <label for="s_lazer"
+                                        class="block text-center border border-gray-200 bg-white py-2.5 rounded-lg cursor-pointer hover:border-gray-400 transition-all select-none relative">
+                                        Lazer
+                                        <div class="check-icon absolute top-1 right-1 text-green-600"><i
+                                                data-lucide="check-circle-2" class="w-3 h-3"></i></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="service" id="s_cilt" class="hidden">
+                                    <label for="s_cilt"
+                                        class="block text-center border border-gray-200 bg-white py-2.5 rounded-lg cursor-pointer hover:border-gray-400 transition-all select-none relative">
+                                        Cilt Bakımı
+                                        <div class="check-icon absolute top-1 right-1 text-green-600"><i
+                                                data-lucide="check-circle-2" class="w-3 h-3"></i></div>
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" name="service" id="s_zayiflama" class="hidden">
+                                    <label for="s_zayiflama"
+                                        class="block text-center border border-gray-200 bg-white py-2.5 rounded-lg cursor-pointer hover:border-gray-400 transition-all select-none relative">
+                                        Zayıflama
+                                        <div class="check-icon absolute top-1 right-1 text-green-600"><i
+                                                data-lucide="check-circle-2" class="w-3 h-3"></i></div>
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-brand-black text-white font-bold text-lg py-4 rounded-xl hover:bg-gray-800 transition-transform active:scale-[0.99] flex items-center justify-center gap-2">
+                                <span>Fiyat Teklifi Al</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
+                            <p class="text-[10px] text-gray-400 text-center mt-3">Bilgileriniz KVKK kapsamında
+                                korunmaktadır. Spam yapılmaz.</p>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right: Hero Image -->
+                <div class="lg:w-1/2 relative" data-aos="fade-left">
+                    <div
+                        class="aspect-[4/5] md:aspect-square lg:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl relative">
+                        <img src="images/hero/main-hero-bg.png" alt="Lumina Estetik Hero"
+                            class="w-full h-full object-cover">
+                        <div
+                            class="absolute bottom-8 left-8 bg-white/95 backdrop-blur px-6 py-4 rounded-2xl shadow-lg border border-white max-w-[200px]">
+                            <div class="flex items-center gap-1 text-yellow-500 mb-1">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <p class="text-xs font-bold leading-tight">"Hayatımda aldığım en iyi cilt bakımı
+                                hizmetiydi."</p>
+                            <p class="text-[10px] text-gray-400 mt-2 font-medium">Melis K. - Google Yorumu</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Bar -->
+            <div class="mt-16 pt-8 border-t border-gray-100 overflow-hidden" data-aos="fade-up">
+                <div class="flex items-center justify-center gap-8 md:gap-16">
+                    <img src="images/badges/fda-approved.png" alt="FDA Onaylı"
+                        class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+                    <img src="images/badges/ce-certified.png" alt="CE Sertifikalı"
+                        class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+                    <img src="images/badges/award-winner.png" alt="Ödüllü Klinik"
+                        class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+                    <img src="images/badges/satisfaction.png" alt="Memnuniyet Garantisi"
+                        class="h-12 md:h-16 object-contain opacity-80 hover:opacity-100 transition-opacity">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="py-20 bg-brand-gray">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Popüler Uygulamalar</h2>
+                <p class="text-gray-500">İhtiyaçlarınıza özel, sonuç odaklı ve bilimsel yaklaşımlar.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div data-aos="fade-up" data-aos-delay="0"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/lazer-epilasyon.png" alt="Lazer Epilasyon"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 right-4 bg-brand-lime text-brand-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Popüler</div>
+                        <div
+                            class="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded animate-pulse">
+                            Son 3 Yer!</div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">Buz Lazer Epilasyon</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Acısız, konforlu ve 4 mevsim uygulanabilen
+                            son teknoloji epilasyon sistemi.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">30 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div data-aos="fade-up" data-aos-delay="100"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/cilt-bakimi.png" alt="Hydrafacial"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">HydraFacial Signature</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Derinlemesine temizlik, besleme ve
+                            nemlendirme. Işıltılı bir cilt için tek seans yeterli.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">45 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div data-aos="fade-up" data-aos-delay="200"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/medikal-estetik.png" alt="Zayıflama"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 left-4 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded">
+                            Bugün %50!</div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">G5 & Bölgesel İncelme</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Selülit görünümünü azaltan, sıkılaştıran ve
+                            forma sokan etkili masaj teknolojisi.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">40 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div data-aos="fade-up" data-aos-delay="0"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/kalici-makyaj.png" alt="Kalıcı Makyaj"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-4 right-4 bg-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            Yeni</div>
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">Kalıcı Makyaj</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Microblading kaş, dudak kontürü ve eyeliner
+                            ile doğal ve kalıcı güzellik.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">60 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div data-aos="fade-up" data-aos-delay="100"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/medikal-estetik.png" alt="Medikal Estetik"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">Botox & Dolgu</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Kırışıklık giderme, dudak dolgusu ve yüz
+                            gençleştirme. Uzman doktor eşliğinde.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">30 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div data-aos="fade-up" data-aos-delay="200"
+                    class="bg-white rounded-2xl p-4 shadow-soft hover:shadow-card hover:translate-y-[-5px] transition-all duration-300 group">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden mb-6 relative">
+                        <img src="images/services/protez-tirnak.png" alt="Protez Tırnak"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2">Protez Tırnak & Manikür</h3>
+                        <p class="text-gray-500 text-sm mb-6 line-clamp-2">Lüks jel ve akrilik uygulamaları. Hijyenik
+                            ortamda profesyonel tırnak bakımı.</p>
+                        <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase">90 Dakika</span>
+                            <a href="#contact"
+                                class="text-sm font-bold underline decoration-2 decoration-brand-lime hover:bg-brand-lime hover:no-underline px-2 py-1 rounded transition-all">Fiyat
+                                Al ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Packages -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Paket Seçenekleri</h2>
+                <p class="text-gray-500">İhtiyacınıza uygun paketi seçin, tasarruf edin.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Starter -->
+                <div data-aos="fade-up"
+                    class="bg-brand-gray rounded-2xl p-8 border-2 border-transparent hover:border-gray-300 transition-colors">
+                    <h3 class="text-xl font-bold mb-2">Başlangıç</h3>
+                    <div class="text-4xl font-black mb-4">₺1.999</div>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 4
+                            Seans Lazer</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 1
+                            Bölge</li>
+                        <li class="flex items-center gap-2 text-gray-400"><i data-lucide="x" class="w-4 h-4"></i> Cilt
+                            Bakımı</li>
+                        <li class="flex items-center gap-2 text-gray-400"><i data-lucide="x" class="w-4 h-4"></i> VIP
+                            Hizmet</li>
+                    </ul>
+                    <a href="#contact"
+                        class="block text-center bg-gray-200 text-black py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors">Seç</a>
+                </div>
+                <!-- Popular -->
+                <div data-aos="fade-up" data-aos-delay="100"
+                    class="bg-brand-black text-white rounded-2xl p-8 border-2 border-brand-lime relative scale-105 shadow-2xl">
+                    <div
+                        class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-lime text-black text-xs font-bold px-4 py-1 rounded-full">
+                        EN POPÜLER</div>
+                    <h3 class="text-xl font-bold mb-2">Standart</h3>
+                    <div class="text-4xl font-black mb-4">₺3.499</div>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-lime"></i>
+                            6 Seans Lazer</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-lime"></i>
+                            3 Bölge</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-lime"></i>
+                            1 Cilt Bakımı</li>
+                        <li class="flex items-center gap-2 text-gray-400"><i data-lucide="x" class="w-4 h-4"></i> VIP
+                            Hizmet</li>
+                    </ul>
+                    <a href="#contact"
+                        class="block text-center bg-brand-lime text-black py-3 rounded-lg font-bold hover:bg-brand-limeHover transition-colors">Seç</a>
+                </div>
+                <!-- Premium -->
+                <div data-aos="fade-up" data-aos-delay="200"
+                    class="bg-brand-gray rounded-2xl p-8 border-2 border-transparent hover:border-gray-300 transition-colors">
+                    <h3 class="text-xl font-bold mb-2">Premium</h3>
+                    <div class="text-4xl font-black mb-4">₺5.999</div>
+                    <ul class="space-y-3 mb-8 text-sm">
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 8
+                            Seans Lazer</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            Sınırsız Bölge</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 3
+                            Cilt Bakımı</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i>
+                            VIP Hizmet</li>
+                    </ul>
+                    <a href="#contact"
+                        class="block text-center bg-gray-200 text-black py-3 rounded-lg font-bold hover:bg-gray-300 transition-colors">Seç</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Before/After Section -->
+    <section id="results" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6" data-aos="fade-up">
+                <div>
+                    <span class="text-brand-lime font-black text-6xl opacity-50 block -mb-4">98%</span>
+                    <h2 class="text-3xl md:text-4xl font-black">Memnuniyet Oranı</h2>
+                    <p class="text-gray-500 mt-2">Sürükleyerek öncesi-sonrası karşılaştırın.</p>
+                </div>
+                <a href="#contact"
+                    class="hidden md:inline-block bg-gray-100 text-black px-6 py-3 rounded-lg font-bold hover:bg-black hover:text-white transition-colors">Siz
+                    de Değişime Katılın</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Slider 1 -->
+                <div data-aos="fade-up" class="bg-brand-gray rounded-2xl p-4">
+                    <div class="ba-slider aspect-[4/3] rounded-xl overflow-hidden relative select-none">
+                        <img src="images/gallery/oncesi-sonrasi-1.png" class="ba-after w-full h-full object-cover">
+                        <img src="images/gallery/oncesi-sonrasi-1.png"
+                            class="ba-before w-full h-full object-cover grayscale">
+                        <div class="ba-handle"></div>
+                        <span
+                            class="absolute top-4 left-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded">ÖNCESİ</span>
+                        <span
+                            class="absolute top-4 right-4 bg-brand-lime text-black text-xs font-bold px-3 py-1 rounded">SONRASI</span>
+                    </div>
+                    <div class="flex justify-between items-center px-2 mt-4">
+                        <div>
+                            <h4 class="font-bold">Lazer Epilasyon</h4>
+                            <p class="text-xs text-gray-500">6 Seans Sonrası</p>
+                        </div>
+                        <div class="text-green-600"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
+                    </div>
+                </div>
+
+                <!-- Slider 2 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="bg-brand-gray rounded-2xl p-4">
+                    <div class="ba-slider aspect-[4/3] rounded-xl overflow-hidden relative select-none">
+                        <img src="images/gallery/oncesi-sonrasi-2.png" class="ba-after w-full h-full object-cover">
+                        <img src="images/gallery/oncesi-sonrasi-2.png"
+                            class="ba-before w-full h-full object-cover grayscale">
+                        <div class="ba-handle"></div>
+                        <span
+                            class="absolute top-4 left-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded">ÖNCESİ</span>
+                        <span
+                            class="absolute top-4 right-4 bg-brand-lime text-black text-xs font-bold px-3 py-1 rounded">SONRASI</span>
+                    </div>
+                    <div class="flex justify-between items-center px-2 mt-4">
+                        <div>
+                            <h4 class="font-bold">Cilt Bakımı</h4>
+                            <p class="text-xs text-gray-500">İlk Seans Sonrası</p>
+                        </div>
+                        <div class="text-green-600"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Reviews -->
+    <section id="reviews" class="py-20 border-t border-gray-100">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center gap-4 mb-10" data-aos="fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+                    class="h-8">
+                <div class="h-6 w-px bg-gray-300"></div>
+                <div class="flex items-center gap-1">
+                    <span class="font-bold text-xl">4.9</span>
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm">(450+ Yorum)</span>
+                </div>
+            </div>
+
+            <div class="flex gap-6 overflow-x-auto pb-8 snap-x">
+                <div class="min-w-[300px] bg-white border border-gray-100 p-6 rounded-2xl shadow-sm snap-start"
+                    data-aos="fade-up">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div
+                            class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-600">
+                            A</div>
+                        <div>
+                            <h5 class="font-bold text-sm">Ayşe Yılmaz</h5>
+                            <span class="text-[10px] text-gray-400">2 gün önce</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed">"İlgi ve alakadan çok memnun kaldım. Lazer
+                        epilasyon sürecim harika geçti, hiç acı hissetmedim. Herkese tavsiye ederim."</p>
+                </div>
+                <div class="min-w-[300px] bg-white border border-gray-100 p-6 rounded-2xl shadow-sm snap-start"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-600 mb-4">
+                        B</div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">"Mekan çok temiz ve ferah. Cilt bakımı sonrası
+                        yüzüm parladı resmen. Çalışanlar çok profesyonel."</p>
+                    <h5 class="font-bold text-sm">Buse Demir</h5>
+                </div>
+                <div class="min-w-[300px] bg-white border border-gray-100 p-6 rounded-2xl shadow-sm snap-start"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-600 mb-4">
+                        S</div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">"Randevu saatlerine çok sadıklar,
+                        bekletilmemek harika. Fiyat/performans olarak Nişantaşı'nın en iyisi."</p>
+                    <h5 class="font-bold text-sm">Selin Kaya</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Feed -->
+    <section class="py-16 bg-white border-t border-gray-100">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex items-center justify-between mb-8" data-aos="fade-up">
+                <div class="flex items-center gap-3">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center">
+                        <i data-lucide="instagram" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold">@luminaestetik</h3>
+                        <p class="text-sm text-gray-500">Bizi Instagram'da takip edin</p>
+                    </div>
+                </div>
+                <a href="https://instagram.com" target="_blank"
+                    class="text-sm font-bold bg-black text-white px-4 py-2 rounded-lg hover:bg-brand-lime hover:text-black transition-colors">Takip
+                    Et</a>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="insta-post aspect-square rounded-xl overflow-hidden relative cursor-pointer"
+                    data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=400&h=400&fit=crop"
+                        class="w-full h-full object-cover">
+                    <div
+                        class="insta-overlay absolute inset-0 bg-black/50 flex items-center justify-center gap-4 text-white">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5"></i> 847</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5"></i>
+                            32</span>
+                    </div>
+                </div>
+                <div class="insta-post aspect-square rounded-xl overflow-hidden relative cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="50">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=400&fit=crop"
+                        class="w-full h-full object-cover">
+                    <div
+                        class="insta-overlay absolute inset-0 bg-black/50 flex items-center justify-center gap-4 text-white">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5"></i> 1.2K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5"></i>
+                            56</span>
+                    </div>
+                </div>
+                <div class="insta-post aspect-square rounded-xl overflow-hidden relative cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=400&fit=crop"
+                        class="w-full h-full object-cover">
+                    <div
+                        class="insta-overlay absolute inset-0 bg-black/50 flex items-center justify-center gap-4 text-white">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5"></i> 634</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5"></i>
+                            18</span>
+                    </div>
+                </div>
+                <div class="insta-post aspect-square rounded-xl overflow-hidden relative cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="150">
+                    <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&h=400&fit=crop"
+                        class="w-full h-full object-cover">
+                    <div
+                        class="insta-overlay absolute inset-0 bg-black/50 flex items-center justify-center gap-4 text-white">
+                        <span class="flex items-center gap-1"><i data-lucide="heart" class="w-5 h-5"></i> 952</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-5 h-5"></i>
+                            41</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Neden Lumina - Trust Stats Section -->
+    <section class="py-20 bg-brand-gray">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Neden Lumina?</h2>
+                <p class="text-gray-500 max-w-xl mx-auto">12 yıllık deneyim, uzman kadro ve FDA onaylı teknolojilerle
+                    güvenilir güzellik.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                <div data-aos="fade-up" data-aos-delay="0" class="bg-white rounded-2xl p-6 text-center shadow-soft">
+                    <i data-lucide="users" class="w-8 h-8 mx-auto mb-3 text-brand-lime"></i>
+                    <div class="text-3xl md:text-4xl font-black mb-1" data-target="15000" data-suffix="+">0+</div>
+                    <p class="text-sm text-gray-500">Mutlu Müşteri</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-2xl p-6 text-center shadow-soft">
+                    <i data-lucide="check-circle" class="w-8 h-8 mx-auto mb-3 text-brand-lime"></i>
+                    <div class="text-3xl md:text-4xl font-black mb-1" data-target="45000" data-suffix="+">0+</div>
+                    <p class="text-sm text-gray-500">Başarılı İşlem</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-2xl p-6 text-center shadow-soft">
+                    <i data-lucide="award" class="w-8 h-8 mx-auto mb-3 text-brand-lime"></i>
+                    <div class="text-3xl md:text-4xl font-black mb-1" data-target="12" data-suffix="">0</div>
+                    <p class="text-sm text-gray-500">Yıllık Deneyim</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-2xl p-6 text-center shadow-soft">
+                    <i data-lucide="user-check" class="w-8 h-8 mx-auto mb-3 text-brand-lime"></i>
+                    <div class="text-3xl md:text-4xl font-black mb-1" data-target="8" data-suffix="+">0+</div>
+                    <p class="text-sm text-gray-500">Uzman Kadro</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div data-aos="fade-up" class="flex items-start gap-4 bg-white rounded-2xl p-6 shadow-soft">
+                    <div class="w-12 h-12 bg-brand-lime/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-brand-black"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-1">FDA Onaylı Cihazlar</h4>
+                        <p class="text-sm text-gray-500">Tüm lazer ve medikal cihazlarımız uluslararası kalite
+                            standartlarına sahiptir.</p>
+                    </div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100"
+                    class="flex items-start gap-4 bg-white rounded-2xl p-6 shadow-soft">
+                    <div class="w-12 h-12 bg-brand-lime/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="recycle" class="w-6 h-6 text-brand-black"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-1">Tek Kullanımlık Malzeme</h4>
+                        <p class="text-sm text-gray-500">Hijyen standartlarımız gereği tüm ekipmanlar tek
+                            kullanımlıktır.</p>
+                    </div>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200"
+                    class="flex items-start gap-4 bg-white rounded-2xl p-6 shadow-soft">
+                    <div class="w-12 h-12 bg-brand-lime/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="heart-handshake" class="w-6 h-6 text-brand-black"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold mb-1">Ücretsiz Danışma</h4>
+                        <p class="text-sm text-gray-500">İlk görüşme ve cilt analizi tamamen ücretsizdir, taahhüt yok.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expert Team Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Uzman Kadromuz</h2>
+                <p class="text-gray-500">Alanında uzman, deneyimli ve sertifikalı profesyoneller.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div data-aos="fade-up" class="group text-center">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative">
+                        <img src="images/team/expert-1.png" alt="Dr. Aylin Demir"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="font-bold text-lg">Dr. Aylin Demir</h4>
+                    <p class="text-gray-500 text-sm">Baş Dermatolog</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100" class="group text-center">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-gray-100">
+                        <img src="images/services/cilt-bakimi.png" alt="Zeynep Aydın"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="font-bold text-lg">Zeynep Aydın</h4>
+                    <p class="text-gray-500 text-sm">Kıdemli Estetisyen</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="group text-center">
+                    <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-6 relative bg-gray-100">
+                        <img src="images/services/kalici-makyaj.png" alt="Elif Yılmaz"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h4 class="font-bold text-lg">Elif Yılmaz</h4>
+                    <p class="text-gray-500 text-sm">Güzellik Danışmanı</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-brand-gray">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-black mb-4">Sıkça Sorulan Sorular</h2>
+                    <p class="text-gray-500">Merak ettiklerinizi yanıtladık.</p>
+                </div>
+                <div class="space-y-4" data-aos="fade-up">
+                    <div class="faq-item bg-white rounded-2xl shadow-soft overflow-hidden">
+                        <button onclick="toggleFaq(this)"
+                            class="w-full flex items-center justify-between p-6 text-left font-bold">
+                            <span>Lazer epilasyon kaç seans sürer?</span>
+                            <i data-lucide="plus" class="w-5 h-5 faq-icon flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-gray-600">Tüy yoğunluğuna ve bölgeye göre değişmekle birlikte, ortalama 6-8
+                                seans ile kalıcı sonuçlar elde edilir. Seanslar 4-6 hafta arayla yapılır.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-white rounded-2xl shadow-soft overflow-hidden">
+                        <button onclick="toggleFaq(this)"
+                            class="w-full flex items-center justify-between p-6 text-left font-bold">
+                            <span>İşlemler acı verir mi?</span>
+                            <i data-lucide="plus" class="w-5 h-5 faq-icon flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-gray-600">Buz lazer teknolojimiz sayesinde işlemler neredeyse acısızdır.
+                                Soğutma sistemi cildi korur ve konforu artırır.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-white rounded-2xl shadow-soft overflow-hidden">
+                        <button onclick="toggleFaq(this)"
+                            class="w-full flex items-center justify-between p-6 text-left font-bold">
+                            <span>Fiyatlar neye göre belirlenir?</span>
+                            <i data-lucide="plus" class="w-5 h-5 faq-icon flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-gray-600">Fiyatlarımız işlem bölgesine, seans sayısına ve paket tercihine
+                                göre değişir. Ücretsiz danışma randevusunda size özel fiyat teklifi sunulur.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-white rounded-2xl shadow-soft overflow-hidden">
+                        <button onclick="toggleFaq(this)"
+                            class="w-full flex items-center justify-between p-6 text-left font-bold">
+                            <span>Randevu nasıl alabilirim?</span>
+                            <i data-lucide="plus" class="w-5 h-5 faq-icon flex-shrink-0"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6">
+                            <p class="text-gray-600">Web sitemizden form doldurarak, WhatsApp üzerinden veya telefonla
+                                randevu alabilirsiniz. 24 saat içinde size dönüş yapılır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="rounded-2xl overflow-hidden shadow-lg" data-aos="fade-right">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.9!2d28.99!3d41.05!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDAzJzAwLjAiTiAyOMKwNTknMjQuMCJF!5e0!3m2!1str!2str!4v1"
+                        class="w-full h-80 border-0" loading="lazy"></iframe>
+                </div>
+                <div data-aos="fade-left">
+                    <h2 class="text-3xl font-black mb-6">Bizi Ziyaret Edin</h2>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 bg-brand-lime/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Adres</h4>
+                                <p class="text-gray-500">Teşvikiye, Vali Konağı Cd. No:123/A, 34365 Şişli/İstanbul</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 bg-brand-lime/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold">Telefon</h4>
+                                <p class="text-gray-500">+90 212 555 00 00</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-brand-gray p-4 rounded-xl mb-6">
+                        <h4 class="font-bold mb-3 flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4"></i>
+                            Çalışma Saatleri</h4>
+                        <table class="w-full text-sm">
+                            <tr class="border-b border-gray-200">
+                                <td class="py-2">Pazartesi - Cuma</td>
+                                <td class="text-right font-bold">10:00 - 20:00</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="py-2">Cumartesi</td>
+                                <td class="text-right font-bold">10:00 - 18:00</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2">Pazar</td>
+                                <td class="text-right font-bold text-red-500">Kapalı</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank"
+                        class="inline-flex items-center gap-2 bg-black text-white px-6 py-3 rounded-lg font-bold hover:bg-gray-800 transition-colors">
+                        <i data-lucide="navigation" class="w-5 h-5"></i> Yol Tarifi Al
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="py-8 bg-brand-gray border-t border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-center gap-8 text-sm text-gray-500">
+                <div class="flex items-center gap-2"><i data-lucide="shield-check"
+                        class="w-5 h-5 text-green-500"></i><span>SSL Güvenli</span></div>
+                <div class="flex items-center gap-2"><i data-lucide="credit-card"
+                        class="w-5 h-5 text-blue-500"></i><span>Güvenli Ödeme</span></div>
+                <div class="flex items-center gap-2"><i data-lucide="check-circle"
+                        class="w-5 h-5 text-brand-lime"></i><span>10.000+ Güvenli İşlem</span></div>
+                <div class="flex items-center gap-2"><i data-lucide="award"
+                        class="w-5 h-5 text-yellow-500"></i><span>Sağlık Bakanlığı Onaylı</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-black text-white pt-16 pb-32">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-gray-800 pb-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#" class="text-3xl font-black tracking-tighter uppercase block mb-6">Lumina<span
+                            class="text-brand-lime">.</span></a>
+                    <p class="text-gray-400 max-w-sm mb-8">Lüksün ve konforun buluşma noktası. Kendinizi uzman ellere
+                        bırakın.</p>
+                    <div class="flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 flex items-center justify-center rounded-full hover:bg-brand-lime hover:text-black transition-colors"><i
+                                data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 flex items-center justify-center rounded-full hover:bg-brand-lime hover:text-black transition-colors"><i
+                                data-lucide="facebook" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-gray-500 uppercase text-xs tracking-widest">Hızlı Erişim</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="#" class="hover:text-brand-lime transition-colors">Hakkımızda</a></li>
+                        <li><a href="#services" class="hover:text-brand-lime transition-colors">Hizmetlerimiz</a></li>
+                        <li><a href="#" class="hover:text-brand-lime transition-colors">Fiyat Listesi</a></li>
+                        <li><a href="#contact" class="hover:text-brand-lime transition-colors">İletişim</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-6 text-gray-500 uppercase text-xs tracking-widest">Adres</h4>
+                    <address class="not-italic text-sm text-gray-400 leading-relaxed">
+                        Teşvikiye, Vali Konağı Cd.<br>
+                        No: 123/A, 34365<br>
+                        Şişli / İstanbul
+                    </address>
+                </div>
+            </div>
+            <div class="text-center text-xs text-gray-600">&copy; 2025 Lumina Estetik. Tüm hakları saklıdır.</div>
+        </div>
+    </footer>
+
+    <!-- Exit Intent Popup -->
+    <div id="exitPopup" class="exit-popup fixed inset-0 bg-black/60 z-[100] items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center relative shadow-2xl">
+            <button onclick="closeExitPopup()" class="absolute top-4 right-4 text-gray-400 hover:text-black"><i
+                    data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="text-5xl mb-4">🎁</div>
+            <h3 class="text-2xl font-black mb-2">Bekle!</h3>
+            <p class="text-gray-500 mb-6">Sana özel %20 ek indirim kodun:</p>
+            <div class="bg-brand-lime text-black font-black text-2xl py-3 px-6 rounded-xl mb-6 inline-block">LUMINA20
+            </div>
+            <form class="space-y-3"
+                onsubmit="event.preventDefault(); alert('İndirim kodunuz kaydedildi!'); closeExitPopup();">
+                <input type="tel" placeholder="Telefonunuzu bırakın"
+                    class="w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-black">
+                <button
+                    class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition-colors">İndirimimi
+                    Al</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chat Widget (Desktop) -->
+    <div class="fixed bottom-28 right-6 z-40 hidden md:block">
+        <div id="chatBubble" class="chat-bounce cursor-pointer"
+            onclick="window.open('https://wa.me/905555555555', '_blank')">
+            <div
+                class="bg-white shadow-lg rounded-2xl px-4 py-3 flex items-center gap-3 border hover:shadow-xl transition-shadow">
+                <div class="w-10 h-10 bg-brand-lime rounded-full flex items-center justify-center">
+                    <i data-lucide="headphones" class="w-5 h-5"></i>
+                </div>
+                <div class="text-sm">
+                    <p class="font-bold">Yardım mı lazım?</p>
+                    <p class="text-gray-500 text-xs">Canlı destek için tıklayın</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sticky Action Bar -->
+    <div
+        class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 md:hidden z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.1)] flex gap-3">
+        <a href="https://wa.me/905555555555"
+            class="flex-1 bg-[#25D366] text-white rounded-xl flex items-center justify-center gap-2 font-bold py-3 hover:brightness-105 transition-all">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+            WhatsApp
+        </a>
+        <a href="tel:+905555555555"
+            class="flex-1 bg-brand-black text-white rounded-xl flex items-center justify-center gap-2 font-bold py-3 hover:bg-gray-800 transition-all">
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            Hemen Ara
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Initialize AOS
+        AOS.init({ duration: 700, once: true, offset: 50 });
+
+        // Hide Page Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('pageLoader').classList.add('hidden'), 500);
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const target = new Date();
+            target.setDate(target.getDate() + 2);
+            target.setHours(23, 59, 59);
+
+            const now = new Date();
+            const diff = target - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').textContent = `⏰ ${days}g ${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Before/After Slider Logic
+        document.querySelectorAll('.ba-slider').forEach(slider => {
+            const beforeImg = slider.querySelector('.ba-before');
+            const handle = slider.querySelector('.ba-handle');
+            let isDragging = false;
+
+            const updateSlider = (x) => {
+                const rect = slider.getBoundingClientRect();
+                let percentage = ((x - rect.left) / rect.width) * 100;
+                percentage = Math.max(0, Math.min(100, percentage));
+                beforeImg.style.clipPath = `polygon(0 0, ${percentage}% 0, ${percentage}% 100%, 0 100%)`;
+                handle.style.left = `${percentage}%`;
+            };
+
+            slider.addEventListener('mousedown', (e) => { isDragging = true; updateSlider(e.clientX); });
+            document.addEventListener('mousemove', (e) => { if (isDragging) updateSlider(e.clientX); });
+            document.addEventListener('mouseup', () => { isDragging = false; });
+
+            slider.addEventListener('touchstart', (e) => { isDragging = true; updateSlider(e.touches[0].clientX); });
+            slider.addEventListener('touchmove', (e) => { if (isDragging) { e.preventDefault(); updateSlider(e.touches[0].clientX); } });
+            slider.addEventListener('touchend', () => { isDragging = false; });
+        });
+
+        // FAQ Accordion Toggle
+        function toggleFaq(btn) {
+            const item = btn.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+            lucide.createIcons();
+        }
+
+        // Exit Intent Popup
+        let exitShown = false;
+        document.addEventListener('mouseout', (e) => {
+            if (!exitShown && e.clientY < 10 && !e.relatedTarget) {
+                document.getElementById('exitPopup').classList.add('active');
+                exitShown = true;
+            }
+        });
+        function closeExitPopup() {
+            document.getElementById('exitPopup').classList.remove('active');
+        }
+
+        // Count-up Animation
+        function animateValue(el, start, end, duration) {
+            let current = start;
+            const increment = (end - start) / (duration / 16);
+            const suffix = el.dataset.suffix || '';
+            function step() {
+                current += increment;
+                if (current < end) {
+                    el.textContent = Math.floor(current).toLocaleString('tr-TR') + suffix;
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = end.toLocaleString('tr-TR') + suffix;
+                }
+            }
+            step();
+        }
+
+        // Intersection Observer for Count-up
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.dataset.target);
+                    animateValue(el, 0, target, 2000);
+                    countObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-target]').forEach(el => countObserver.observe(el));
+    </script>
+</body>
+
+</html>
